@@ -1,53 +1,55 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
 
 const GreetingsSection = () => {
-  const [sequenceKey, setSequenceKey] = useState(1);
-
-  useEffect(() => {
-    console.log("renderizou");
-  }, [sequenceKey]);
+  const [currentKey, setCurrentKey] = useState(0);
+  const gradients = [
+    "#7BD0FF, #00DC80",
+    "#F4D52F, #F19E21",
+    "#A30CFF, #008DDC",
+  ];
 
   return (
     <>
-      <p className="text-5xl text-white">Hey there!</p>
+      <div className="p-5">
+        <p>Hey there!</p>
 
-      <div className="flex flex-row items-center gap-1 text-xl text-white">
-        <p>I'm</p>
+        <div className="flex flex-row items-center gap-3 text-5xl">
+          <p className="">I'm</p>
 
-        {sequenceKey === 1 && (
-          <TypeAnimation
-            sequence={["redig", 3000, "", () => setSequenceKey(2)]}
-            className="bg-gradient-to-r from-[#7BD0FF] to-[#00DC80] bg-clip-text font-bold text-transparent"
-            repeat={Infinity}
-            cursor={true}
-          />
-        )}
-
-        {sequenceKey === 2 && (
-          <TypeAnimation
-            sequence={["a son of God", 3000, "", () => setSequenceKey(3)]}
-            className="bg-gradient-to-r from-[#F4D52F] to-[#F19E21] bg-clip-text font-bold text-transparent"
-            repeat={Infinity}
-            cursor={true}
-          />
-        )}
-
-        {sequenceKey === 3 && (
-          <TypeAnimation
-            sequence={[
-              "a full stack developer",
-              3000,
-              () => setSequenceKey(1),
-              "",
-            ]}
-            className="bg-gradient-to-r from-[#A30CFF] to-[#008DDC] bg-clip-text font-bold text-transparent"
-            repeat={Infinity}
-            cursor={true}
-          />
-        )}
+          <div
+            className="flex h-[60px] items-center font-bold"
+            style={{
+              backgroundImage: `linear-gradient(to right, ${gradients[currentKey]})`,
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            <TypeAnimation
+              sequence={[
+                "redig",
+                2000,
+                "",
+                () => setCurrentKey(1),
+                "a son of God",
+                2000,
+                "",
+                () => setCurrentKey(2),
+                "a full stack developer",
+                2000,
+                "",
+                () => setCurrentKey(0),
+                "",
+              ]}
+              repeat={Infinity}
+              wrapper="p"
+              cursor={true}
+              preRenderFirstString={true}
+            />
+          </div>
+        </div>
       </div>
     </>
   );
